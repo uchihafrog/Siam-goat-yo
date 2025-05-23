@@ -29,7 +29,7 @@ module.exports = {
 	langs: {
 		vi: {
 			monday: "Thứ 2",
-			tuesday: "Thứ 3",
+			tuesday: "Tứ 3",
 			wednesday: "Thứ 4",
 			thursday: "Thứ 5",
 			friday: "Thứ 6",
