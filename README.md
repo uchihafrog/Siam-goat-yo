@@ -2,7 +2,7 @@
 <h1 align="center"><img src="./dashboard/images/logo-non-bg.png" width="22px"> Goat Bot V2 Chatbot Messenger</h1>
 
 
-## Introduction
+## Introuction
 
 #### Join us in [Messenger Group](https://m.me/j/AbZ6Bj-uS3npg7di/)🍪
 ###### If you encounter any issues or difficulties, don't hesitate to reach out and ask for assistance here. Our team is here to help you with any problems you may face.
