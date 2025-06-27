@@ -5,7 +5,7 @@
 ## Introuction
 
 #### Joinus in [Messenger Group](https://m.me/j/AbZ6Bj-uS3npg7di/)🍪
-###### If you encounter any issues or difficulties, don't hesitate to reach out and ask for assistance here. Our team is here to help you with any problems you may face.
+###### If you enounter any issues or difficulties, don't hesitate to reach out and ask for assistance here. Our team is here to help you with any problems you may face.
 
 - If you encounter any issues or have questions related to this project, please don't hesitate to reach out to us on messenger. we're here to assist you!
 
