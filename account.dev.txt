@@ -14,7 +14,7 @@
     },
     {
         "domain": ".facebook.com",
-        "expirationDate": 1786246690.13625,
+        "expirationDate": 1786824059.767824,
         "hostOnly": false,
         "httpOnly": true,
         "name": "datr",
@@ -27,7 +27,7 @@
     },
     {
         "domain": ".facebook.com",
-        "expirationDate": 1760033669.333268,
+        "expirationDate": 1760040060.224014,
         "hostOnly": false,
         "httpOnly": true,
         "name": "fr",
@@ -36,11 +36,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "0Ldaxucq665EdcPnK.AWf1drXrsMmqkweJ8Cd5leUl4Yvkg8WQ6Q_SxiW2-Mb4y2Q2lAU.BoLbCK..AAA.0.0.BocVSE.AWf2EukkJvQ72gBfa431nEHEBwc"
+        "value": "0Ldaxucq665EdcPnK.AWfxn0Kcqzoxtw017KPUQw8Bi5_pcTqm3sqzqnSjlKrPxW60uFk.BoLbCK..AAA.0.0.BocW18.AWfFdEMMT7ykKwnu3S6eA6nxBUU"
     },
     {
         "domain": ".facebook.com",
-        "expirationDate": 1757441670,
+        "expirationDate": 1757448075,
         "hostOnly": false,
         "httpOnly": false,
         "name": "vpd",
@@ -66,7 +66,7 @@
     },
     {
         "domain": ".facebook.com",
-        "expirationDate": 1783793670,
+        "expirationDate": 1783800075,
         "hostOnly": false,
         "httpOnly": false,
         "name": "fbl_st",
@@ -75,7 +75,7 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "101727226%3BT%3A29204294"
+        "value": "101726017%3BT%3A29204401"
     },
     {
         "domain": ".facebook.com",
@@ -117,7 +117,7 @@
     },
     {
         "domain": ".facebook.com",
-        "expirationDate": 1786817669.334336,
+        "expirationDate": 1786824060.224453,
         "hostOnly": false,
         "httpOnly": true,
         "name": "pas",
@@ -168,7 +168,7 @@
     },
     {
         "domain": ".facebook.com",
-        "expirationDate": 1760033678,
+        "expirationDate": 1760040075,
         "hostOnly": false,
         "httpOnly": false,
         "name": "wl_cbv",
@@ -177,6 +177,6 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "v2%3Bclient_version%3A2867%3Btimestamp%3A1752257669%3BCRCM%3A-1227485850"
+        "value": "v2%3Bclient_version%3A2867%3Btimestamp%3A1752264060"
     }
 ]
