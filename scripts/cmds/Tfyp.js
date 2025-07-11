@@ -8,8 +8,8 @@ module.exports = {
     author: "SiamTheFrog",
     countDown: 5,
     role: 0,
-    shortDescription: "Send TikTok FYP video by query.",
-    longDescription: "Search and send a TikTok FYP video based on query.",
+    shortDescription: "Send aura FYP video by query.",
+    longDescription: "Search and send a aura FYP video based on query.",
     category: "entertainment",
     guide: "+tfyp <query>"
   },
@@ -29,7 +29,7 @@ module.exports = {
     }
 
     const startTime = Date.now();
-    const API_URL = `https://fyp-api-siamthefrog.onrender.com/search?query=${encodeURIComponent(query)}`;
+    const API_URL = `https://fyp-scrap-froggy-api-v3.vercel.app/search?query=${encodeURIComponent(query)}`;
 
     try {
       const response = await axios.get(API_URL);
@@ -50,7 +50,7 @@ module.exports = {
       }, threadID, messageID);
 
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching TikTok video:", error);
       api.sendMessage("Error fetching video. Please try again later.", threadID, messageID);
     }
   }
