@@ -1,110 +1,68 @@
 const axios = require("axios");
-const fs = require('fs-extra');
-const path = require('path');
-const { getStreamFromURL, shortenURL, randomString } = global.utils;
-
-const API_KEYS = [
-    'b38444b5b7mshc6ce6bcd5c9e446p154fa1jsn7bbcfb025b3b',
-];
-
-async function video(api, event, args, message) {
-    api.setMessageReaction("🕢", event.messageID, (err) => {}, true);
-    try {
-        let title = '';
-        let shortUrl = '';
-        let videoId = '';
-
-        const extractShortUrl = async () => {
-            const attachment = event.messageReply.attachments[0];
-            if (attachment.type === "video" || attachment.type === "audio") {
-                return attachment.url;
-            } else {
-                throw new Error("Invalid attachment type.");
-            }
-        };
-
-        const getRandomApiKey = () => {
-            const randomIndex = Math.floor(Math.random() * API_KEYS.length);
-            return API_KEYS[randomIndex];
-        };
-
-        if (event.messageReply && event.messageReply.attachments && event.messageReply.attachments.length > 0) {
-            shortUrl = await extractShortUrl();
-            const musicRecognitionResponse = await axios.get(`https://audio-recon-ahcw.onrender.com/kshitiz?url=${encodeURIComponent(shortUrl)}`);
-            title = musicRecognitionResponse.data.title;
-            const searchResponse = await axios.get(`https://youtube-kshitiz-gamma.vercel.app/yt?search=${encodeURIComponent(title)}`);
-            if (searchResponse.data.length > 0) {
-                videoId = searchResponse.data[0].videoId;
-            }
-
-            shortUrl = await shortenURL(shortUrl);
-        } else if (args.length === 0) {
-            message.reply("Please provide a video name or reply to a video or audio attachment.");
-            return;
-        } else {
-            title = args.join(" ");
-            const searchResponse = await axios.get(`https://youtube-kshitiz-gamma.vercel.app/yt?search=${encodeURIComponent(title)}`);
-            if (searchResponse.data.length > 0) {
-                videoId = searchResponse.data[0].videoId;
-            }
-
-            const videoUrlResponse = await axios.get(`https://mr-kshitizyt.onrender.com/download?id=${encodeURIComponent(videoId)}&apikey=${getRandomApiKey()}`);
-            if (videoUrlResponse.data.length > 0) {
-                shortUrl = await shortenURL(videoUrlResponse.data[0]);
-            }
-        }
-
-        if (!videoId) {
-            message.reply("No video found for the given query.");
-            return;
-        }
-
-        const downloadResponse = await axios.get(`https://mr-kshitizyt.onrender.com/download?id=${encodeURIComponent(videoId)}&apikey=${getRandomApiKey()}`);
-        const videoUrl = downloadResponse.data[0];
-
-        if (!videoUrl) {
-            message.reply("Failed to retrieve download link for the video.");
-            return;
-        }
-
-        const writer = fs.createWriteStream(path.join(__dirname, "cache", `${videoId}.mp3`));
-        const response = await axios({
-            url: videoUrl,
-            method: 'GET',
-            responseType: 'stream'
-        });
-
-        response.data.pipe(writer);
-
-        writer.on('finish', () => {
-            const videoStream = fs.createReadStream(path.join(__dirname, "cache", `${videoId}.mp3`));
-            message.reply({ body: `📹 Playing: ${title}`, attachment: videoStream });
-            api.setMessageReaction("✅", event.messageID, () => {}, true);
-        });
-
-        writer.on('error', (error) => {
-            console.error("Error:", error);
-            message.reply("Error downloading the video.");
-        });
-    } catch (error) {
-        console.error("Error:", error);
-        message.reply("An error occurred.");
-    }
-}
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
-    config: {
-        name: "sing", 
-        version: "1.0",
-        author: "Vex_Kshitiz",
-        countDown: 10,
-        role: 0,
-        shortDescription: "play audio from youtube",
-        longDescription: "play audio from youtube support audio recognition.",
-        category: "music",
-        guide: "{p} audio videoname / reply to audio or video" 
-    },
-    onStart: function ({ api, event, args, message }) {
-        return video(api, event, args, message);
+  config: {
+    name: "sing",
+    aliases: [],
+    version: "1.0.5",
+    author: "SiamTheFrog",
+    shortDescription: "Search and get audio from Instagram music",
+    longDescription: "Search for a keyword and get the Instagram music audio file.",
+    category: "music",
+    guide: "{pn} [keyword]"
+  },
+
+  onStart: async function ({ api, event, args }) {
+    const query = args.join(" ");
+    const { threadID, messageID } = event;
+
+    if (!query) {
+      return api.sendMessage("❗ Please provide a keyword.\nExample: /sing Phonk", threadID, messageID);
     }
+
+    try {
+      const res = await axios.get(`https://sing-api-v2-siam-the-frog.vercel.app/sing/${encodeURIComponent(query)}`);
+      const { artist, duration, url: downloadUrl } = res.data;
+
+      if (!downloadUrl) {
+        return api.sendMessage("❌ No valid audio found for your search.", threadID, messageID);
+      }
+
+      await api.sendMessage(
+        `🎧 𝗔𝘂𝗱𝗶𝗼 𝗥𝗲𝘀𝘂𝗹𝘁\n\n🎙 Artist: ${artist}\n⏱ Duration: ${duration}s\n\n🔗 Link: ${downloadUrl}`,
+        threadID
+      );
+
+      const audioPath = path.join(__dirname, `${Date.now()}.mp3`);
+      const writer = fs.createWriteStream(audioPath);
+
+      const audioStream = await axios({
+        url: downloadUrl,
+        method: 'GET',
+        responseType: 'stream'
+      });
+
+      audioStream.data.pipe(writer);
+
+      writer.on('finish', () => {
+        api.sendMessage({
+          body: "⬇️ 𝗛𝗲𝗿𝗲 𝗶𝘀 𝘆𝗼𝘂𝗿 𝗮𝘂𝗱𝗶𝗼:",
+          attachment: fs.createReadStream(audioPath)
+        }, threadID, () => {
+          fs.unlinkSync(audioPath);
+        }, messageID);
+      });
+
+      writer.on('error', (err) => {
+        console.error("Write error:", err);
+        api.sendMessage("❌ Failed to save audio.", threadID, messageID);
+      });
+
+    } catch (err) {
+      console.error("Fetch error:", err);
+      api.sendMessage("❌ Failed to fetch audio. Try again later.", threadID, messageID);
+    }
+  }
 };
