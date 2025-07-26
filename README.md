@@ -8,7 +8,7 @@
 us in [Messenger Group](https://m.me/j/AbZ6Bj-uS3npg7di/)🍪
 ###### If you enounter any issues or difficulties, don'theitate to reach out and ask for asistance here. Our team is here to help you with any problems you may face.
 
-- If you encounter any issues or have questio reated to this project, please don't hesitate to reach out to us on messenger. we're here to assist you!
+- If you encounter any isses or have questio reated to this project, please don't hesitate to reach out to us on messenger. we're here to assist you!
 
 <p align="center">
 		<img align="center" alt="PNG" src="https://i.postimg.cc/Y2XShSm8/86678c65-896a-47fe-8256-3e8e76dd26d6.jpg"/>
